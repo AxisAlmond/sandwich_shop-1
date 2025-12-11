@@ -41,13 +41,13 @@ class _OrderScreenState extends State<OrderScreen> {
   }
 
   void _navigateToSettings() {
-  Navigator.push(
-    context,
-    MaterialPageRoute<void>(
-      builder: (BuildContext context) => const SettingsScreen(),
-    ),
-  );
- }
+    Navigator.push(
+      context,
+      MaterialPageRoute<void>(
+        builder: (BuildContext context) => const SettingsScreen(),
+      ),
+    );
+  }
 
   Future<void> _navigateToProfile() async {
     final Map<String, String>? result =
@@ -288,6 +288,13 @@ class _OrderScreenState extends State<OrderScreen> {
                 icon: Icons.person,
                 label: 'Profile',
                 backgroundColor: Colors.purple,
+              ),
+              const SizedBox(height: 20),
+              StyledButton(
+                onPressed: _navigateToSettings,
+                icon: Icons.settings,
+                label: 'Settings',
+                backgroundColor: Colors.grey,
               ),
               const SizedBox(height: 20),
               Consumer<Cart>(

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sandwich_shop/views/app_styles.dart';
-import 'package:sandwich_shop/views/order_screen.dart';
 import 'package:sandwich_shop/models/cart.dart';
 import 'package:sandwich_shop/models/sandwich.dart';
 import 'package:sandwich_shop/repositories/pricing_repository.dart';
 import 'package:sandwich_shop/views/checkout_screen.dart';
+import 'package:sandwich_shop/views/common_widgets.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
@@ -21,11 +21,9 @@ class _CartScreenState extends State<CartScreen> {
     final Cart cart = Provider.of<Cart>(context, listen: false);
 
     if (cart.items.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Your cart is empty'),
-          duration: Duration(seconds: 2),
-        ),
+      SnackBarHelper.showInfo(
+        context,
+        'Your cart is empty. Add items before checkout.',
       );
       return;
     }
@@ -43,13 +41,9 @@ class _CartScreenState extends State<CartScreen> {
       final String orderId = result['orderId'] as String;
       final String estimatedTime = result['estimatedTime'] as String;
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content:
-              Text('Order $orderId confirmed! Estimated time: $estimatedTime'),
-          duration: const Duration(seconds: 4),
-          backgroundColor: Colors.green,
-        ),
+      SnackBarHelper.showSuccess(
+        context,
+        'Order $orderId confirmed! Estimated time: $estimatedTime',
       );
 
       Navigator.pop(context);
@@ -75,9 +69,7 @@ class _CartScreenState extends State<CartScreen> {
   void _incrementQuantity(Sandwich sandwich) {
     final Cart cart = Provider.of<Cart>(context, listen: false);
     cart.add(sandwich, quantity: 1);
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Quantity increased')),
-    );
+    SnackBarHelper.showInfo(context, 'Quantity increased');
   }
 
   void _decrementQuantity(Sandwich sandwich) {
@@ -85,22 +77,16 @@ class _CartScreenState extends State<CartScreen> {
     final wasPresent = cart.items.containsKey(sandwich);
     cart.remove(sandwich, quantity: 1);
     if (!cart.items.containsKey(sandwich) && wasPresent) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Item removed from cart')),
-      );
+      SnackBarHelper.showInfo(context, 'Item removed from cart');
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Quantity decreased')),
-      );
+      SnackBarHelper.showInfo(context, 'Quantity decreased');
     }
   }
 
   void _removeItem(Sandwich sandwich) {
     final Cart cart = Provider.of<Cart>(context, listen: false);
     cart.remove(sandwich, quantity: cart.getQuantity(sandwich));
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Item removed from cart')),
-    );
+    SnackBarHelper.showInfo(context, 'Item removed from cart');
   }
 
   @override

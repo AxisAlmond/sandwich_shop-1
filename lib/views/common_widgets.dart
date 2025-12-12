@@ -22,6 +22,7 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
       leading: const AppBarLogo(),
       title: Text(title, style: heading1),
       actions: [
+        if (showCartCounter) const CartCounterWidget(),
         if (additionalActions != null) ...additionalActions!,
       ],
     );
@@ -43,6 +44,29 @@ class AppBarLogo extends StatelessWidget {
         height: 100,
         child: Image.asset('assets/images/logo.png'),
       ),
+    );
+  }
+}
+
+class CartCounterWidget extends StatelessWidget {
+  const CartCounterWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<Cart>(
+      builder: (context, cart, child) {
+        return Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Icon(Icons.shopping_cart),
+              const SizedBox(width: 4),
+              Text('${cart.countOfItems}'),
+            ],
+          ),
+        );
+      },
     );
   }
 }

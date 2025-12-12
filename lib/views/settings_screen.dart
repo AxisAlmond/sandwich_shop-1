@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sandwich_shop/views/app_styles.dart';
+import 'package:sandwich_shop/views/common_widgets.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -44,15 +45,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
     }
 
     return Scaffold(
-      appBar: AppBar(
-        leading: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: SizedBox(
-            height: 100,
-            child: Image.asset('assets/images/logo.png'),
-          ),
-        ),
-        title: Text('Settings', style: AppStyles.heading1),
+      appBar: const CommonAppBar(
+        title: 'Settings',
+        showCartCounter: false,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -61,7 +56,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             Text('Font Size', style: AppStyles.heading2),
             const SizedBox(height: 20),
             Text(
-              'Current size: ${_fontSize.toInt()}px',
+              'This is sample text to preview the font size.',
               style: TextStyle(fontSize: _fontSize),
             ),
             const SizedBox(height: 20),
@@ -69,25 +64,28 @@ class _SettingsScreenState extends State<SettingsScreen> {
               value: _fontSize,
               min: 12.0,
               max: 24.0,
-              divisions: 6,
-              label: _fontSize.toInt().toString(),
+              divisions: 24,
+              label: _fontSize.toStringAsFixed(0),
               onChanged: _saveFontSize,
             ),
-            const SizedBox(height: 20),
             Text(
-              'This is sample text to preview the font size.',
-              style: TextStyle(fontSize: _fontSize),
+              'Current size: ${_fontSize.toStringAsFixed(0)}',
+              style: AppStyles.normalText,
             ),
             const SizedBox(height: 20),
-            Text(
-              'Font size changes are saved automatically. Restart the app to see changes in all screens.',
-              style: AppStyles.normalText,
+            const Text(
+              'Note: Restart the app to see changes applied everywhere.',
+              style: TextStyle(
+                fontSize: 12,
+                fontStyle: FontStyle.italic,
+                color: Colors.grey,
+              ),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 20),
+            const Spacer(),
             ElevatedButton(
               onPressed: () => Navigator.pop(context),
-              child: Text('Back to Order', style: AppStyles.normalText),
+              child: const Text('Back to Order'),
             ),
           ],
         ),

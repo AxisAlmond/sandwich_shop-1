@@ -107,3 +107,35 @@ class StyledButton extends StatelessWidget {
   }
 }
 
+/// Helper class for SnackBar messages
+class SnackBarHelper {
+  static void showSuccess(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        duration: const Duration(seconds: 2),
+        backgroundColor: Colors.green,
+      ),
+    );
+  }
+
+  static void showError(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        duration: const Duration(seconds: 2),
+        backgroundColor: Colors.red,
+      ),
+    );
+  }
+
+  static void showInfo(BuildContext context, String message,
+      {Duration duration = const Duration(seconds: 2)}) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        duration: duration,
+      ),
+    );
+  }
+}
